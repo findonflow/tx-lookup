@@ -17,7 +17,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	network := r.URL.Query().Get("network")
-	if network != "" {
+	if network == "" {
 		network = "mainnet"
 	}
 	o := Overflow(WithNetwork(network))
