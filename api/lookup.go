@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	. "github.com/bjartek/overflow"
+	"github.com/bjartek/overflow"
 	"github.com/onflow/flow-go-sdk"
 )
 
@@ -21,9 +21,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	if network == "" {
 		network = "mainnet"
 	}
-	o := Overflow(WithNetwork(network))
+	o := overflow.Overflow(overflow.WithNetwork(network))
 
-	t, err := o.GetTransactionById(context.Background(), flow.HexToID(id))
+	t, err := o.GetOverflowTransactionById(context.Background(), flow.HexToID(id))
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Cannot find transaction with id %s on network %s error:%v", id, network, err), http.StatusNotFound)
 		return
