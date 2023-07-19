@@ -70,7 +70,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		Authorizers:     []string{},
 		Stakeholders:    map[string][]string{},
 		Payer:           t.Payer,
-		ProposalKey:     flow.ProposalKey{},
+		ProposalKey:     t.ProposalKey,
 		GasLimit:        t.GasLimit,
 		GasUsed:         t.GasUsed,
 		ExecutionEffort: t.ExecutionEffort,
