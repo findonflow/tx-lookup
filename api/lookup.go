@@ -2,6 +2,8 @@ package handler
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -59,6 +61,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 
+	hash := sha256.Sum256(t.Script)
+
 	tx := Transaction{
 		Id:              t.Id,
 		Block:           Block{Height: b.Height, ID: b.ID.String(), Time: b.Timestamp},
@@ -75,6 +79,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		GasUsed:         t.GasUsed,
 		ExecutionEffort: t.ExecutionEffort,
 		Body:            string(t.Script),
+		BodyHash:        hex.EncodeToString(hash[:]),
 		Import:          imports,
 	}
 
@@ -108,6 +113,7 @@ type Transaction struct {
 	GasUsed         uint64
 	ExecutionEffort float64
 	Body            string
+	BodyHash        string
 	Import          []Import
 }
 
