@@ -73,9 +73,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if tx.Error != nil {
-
-	}
 	tx := Transaction{
 		Id:              t.Id,
 		Block:           Block{Height: b.Height, ID: b.ID.String(), Time: b.Timestamp},
