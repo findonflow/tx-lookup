@@ -63,13 +63,26 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	hash := sha256.Sum256(t.Script)
 
+	status := t.Status
+	txErr := ""
+	if t.Error != nil {
+		txErr = t.Error.Error()
+		if txErr != "" {
+			status = "ERROR"
+
+		}
+	}
+
+	if tx.Error != nil {
+
+	}
 	tx := Transaction{
 		Id:              t.Id,
 		Block:           Block{Height: b.Height, ID: b.ID.String(), Time: b.Timestamp},
 		Events:          events,
-		Error:           t.Error,
+		Error:           txErr,
 		Fee:             t.Fee,
-		Status:          t.Status,
+		Status:          status,
 		Arguments:       arguments,
 		Authorizers:     t.Authorizers,
 		Stakeholders:    t.Stakeholders,
@@ -101,7 +114,7 @@ type Transaction struct {
 	Id              string
 	Block           Block
 	Events          []Event
-	Error           error
+	Error           string
 	Fee             float64
 	Status          string
 	Arguments       []KV

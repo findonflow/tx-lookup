@@ -189,3 +189,5 @@ require (
 	modernc.org/sqlite v1.21.1 // indirect
 	mvdan.cc/gofumpt v0.4.0 // indirect
 )
+
+replace github.com/onflow/fusd/lib/go/contracts => ./deps/fusd
