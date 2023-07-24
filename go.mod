@@ -3,7 +3,7 @@ module github.com/findonflow/tx-lookup
 go 1.20
 
 require (
-	github.com/bjartek/overflow v1.9.0
+	github.com/bjartek/overflow v1.9.1-0.20230721202329-e409c970d74a
 	github.com/onflow/flow-go-sdk v0.41.9
 )
 
