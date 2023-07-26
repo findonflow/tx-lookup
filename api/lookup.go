@@ -33,7 +33,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	b, err := o.GetBlockById(context.Background(), t.BlockId)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("Cannot find transaction with id %s on network %s error:%v", id, network, err), http.StatusNotFound)
+		http.Error(w, fmt.Sprintf("Cannot find block for transaction with id %s on network %s error:%v", id, network, err), http.StatusNotFound)
 		return
 	}
 
