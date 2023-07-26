@@ -31,10 +31,14 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	b, err := o.GetBlockById(context.Background(), t.BlockId)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("Cannot find block for transaction with id %s on network %s error:%v", id, network, err), http.StatusNotFound)
-		return
+	// Check if the transaction status is not PENDING before fetching the block
+	var b *flow.Block
+	if t.Status != "PENDING" {
+		b, err = o.GetBlockById(context.Background(), t.BlockId)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Cannot find block for transaction with id %s on network %s error:%v", id, network, err), http.StatusNotFound)
+			return
+		}
 	}
 
 	events := []Event{}
@@ -73,9 +77,15 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	// Modify the transaction block initialization
+	var block Block
+	if b != nil {
+		block = Block{Height: b.Height, ID: b.ID.String(), Time: b.Timestamp}
+	}
+
 	tx := Transaction{
 		Id:              t.Id,
-		Block:           Block{Height: b.Height, ID: b.ID.String(), Time: b.Timestamp},
+		Block:           block,
 		Events:          events,
 		Error:           txErr,
 		Fee:             t.Fee,
